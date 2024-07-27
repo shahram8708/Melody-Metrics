@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Melody Metrics 🎶</title>
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.1.0/github-markdown.min.css">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #ff9a8b, #ff6a88, #ff5f6d, #d24d92, #ff5f5d, #f8a5c2, #f76c6c, #ff85a1, #ff7e79, #ff647f);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 700px;
+            background: linear-gradient(135deg, #fbc2eb, #f9b3d0, #f78f8f, #f6a2b8, #f5c4d2, #f4a6b0, #f2b4a2, #e8b7c6, #e2a8c2, #d89cdb);
+            border-radius: 12px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            text-align: center;
+            margin: 20px 10px;
+        }
+
+        h1 {
+            color: black;
+            margin-bottom: 20px;
+        }
+
+        .file-upload {
+            position: relative;
+            display: inline-block;
+            margin: 15px 0;
+        }
+
+        .file-upload input[type="file"] {
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+            z-index: 1;
+        }
+
+        .file-upload label {
+            display: block;
+            padding: 15px;
+            background: linear-gradient(135deg, #f7d0f1, #f3a9f4, #e75bf7, #c657f0, #a246f4, #8844f2, #673cce, #5e3c7c, #492b70, #4e2a5f);
+            color: #ffffff;
+            border-radius: 8px;
+            font-size: 16px;
+            text-align: center;
+            font-weight: 500;
+            cursor: pointer;
+            border: 2px solid #1d72b8;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        .file-upload label:hover {
+            background: linear-gradient(135deg, #ffafbd, #ffc3a0, #ff677d, #d4a5a5, #c8a2c8, #f7c6c7, #c2c0f5, #a8c0e8, #9c90d0, #6e3f7b);
+            border-color: #155a8a;
+        }
+
+        textarea {
+            width: 95%;
+            height: 120px;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 8px;
+            border: 1px solid #dcdcdc;
+            font-size: 16px;
+            line-height: 1.5;
+            box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.1);
+            resize: vertical;
+            background: linear-gradient(135deg, #ffafbd, #ffc3a0, #ff677d, #d4a5a5, #c8a2c8, #f7c6c7, #c2c0f5, #a8c0e8, #9c90d0, #6e3f7b);
+            color: black;
+            font-weight: bolder;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        textarea:focus {
+            border-color: #1d72b8;
+            box-shadow: 0 0 5px rgba(29, 114, 184, 0.3);
+            outline: none;
+        }
+
+        button {
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #8e2de2, #4a00e0, #6200ea, #3e00ff, #0022ff, #0b50d0, #3f00c5, #5b3fe6, #4b12d9, #3b0aa0);
+            color: #ffffff;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 15px;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        button:hover {
+            background: linear-gradient(135deg, #009fff, #0082e3, #006db7, #004da3, #003e8a, #00295e, #001c3f, #001a28, #000d1a, #000000);
+            transform: scale(1.02);
+        }
+
+        #waveLoader {
+            display: none;
+            margin: 20px 0;
+        }
+
+        #waveLoader div {
+            width: 12px;
+            height: 12px;
+            margin: 0 6px;
+            background: linear-gradient(135deg, #fffc00, #f0c300, #f0a300, #f07a00, #e04e00, #c52600, #a00e00, #800000, #660000, #400000);
+            border-radius: 50%;
+            display: inline-block;
+            animation: wave 1.5s infinite;
+        }
+
+        #waveLoader div:nth-child(2) {
+            animation-delay: 0.3s;
+        }
+
+        #waveLoader div:nth-child(3) {
+            animation-delay: 0.6s;
+        }
+
+        @keyframes wave {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.5);
+            }
+        }
+
+        .markdown-body {
+            text-align: left;
+            margin-top: 20px;
+            padding: 20px;
+            background: linear-gradient(135deg, #ff7e5f, #feb47b, #ff6f61, #ff9a8b, #fcb045, #f79c42, #f5a623, #f7b500);
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            transition: border-color 0.3s;
+            color: black;
+        }
+
+        .markdown-body:hover {
+            border-color: #1d72b8;
+        }
+
+        .actions {
+            margin-top: 20px;
+        }
+
+        .actions button {
+            margin: 5px;
+            padding: 8px 16px;
+            background-color: #1d72b8;
+            border: none;
+            color: #ffffff;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .actions button:hover {
+            background-color: #155a8a;
+            transform: scale(1.02);
+        }
+
+        #summarySection {
+            display: none;
+        }
+
+        p {
+            line-height: 1.6;
+        }
+
+        .highlight {
+            color: #4a00e0;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Melody Metrics 🎶</h1>
+        <button id="recordButton" onclick="toggleRecording()">Start Recording 🎤</button>
+        <br><br>
+        <div id="waveLoader">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <div id="summarySection">
+            <h2 style="color: black;">Rhythm Analytics 📊</h2>
+            <div id="summaryContent" class="markdown-body"></div>
+            <div class="actions">
+                <button onclick="copySummary()">📋</button>
+                <button onclick="speakSummary()">🔊</button>
+                <button onclick="stopAudio()">⏹️</button>
+            </div>
+        </div>
+        <hr style="border: none; height: 4px; background: #4a00e0; border-radius: 5px; margin: 20px 0;">
+        <h1>About Melody Metrics 🎶</h1>
+        <p>Welcome to <span class="highlight">Melody Metrics</span>, the advanced tool for identifying and analyzing
+            music tracks. Just like Shazam, our platform lets you discover songs by recording audio snippets.</p>
+        <hr style="border: none; height: 4px; background: #4a00e0; border-radius: 5px; margin: 20px 0;">
+        <h2>How It Works</h2>
+        <p>Simply click "Start Recording" to capture a snippet of the song. Once you stop recording, our technology
+            analyzes the audio and provides you with detailed information about the track.</p>
+    </div>
+
+    <script>
+        let mediaRecorder;
+        let audioChunks = [];
+        let isRecording = false;
+        let utterance;
+        let isProcessing = false;
+
+        async function toggleRecording() {
+            if (isRecording) {
+                stopRecording();
+            } else {
+                startRecording();
+            }
+        }
+
+        async function startRecording() {
+            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    mediaRecorder = new MediaRecorder(stream);
+
+                    mediaRecorder.ondataavailable = event => {
+                        audioChunks.push(event.data);
+                    };
+
+                    mediaRecorder.onstop = async () => {
+                        if (!isProcessing) {
+                            isProcessing = true;
+                            const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+                            const formData = new FormData();
+                            formData.append('file', audioBlob);
+                            formData.append('customInput', 'Please provide the singer\'s name and song title.');
+
+                            const waveLoader = document.getElementById('waveLoader');
+                            const summarySection = document.getElementById('summarySection');
+                            const summaryContentDiv = document.getElementById('summaryContent');
+
+                            waveLoader.style.display = 'inline-block';
+                            summaryContentDiv.innerHTML = '';
+
+                            const response = await fetch('/upload', {
+                                method: 'POST',
+                                body: formData
+                            });
+
+                            const result = await response.json();
+                            waveLoader.style.display = 'none';
+
+                            if (result && result.summary) {
+                                summaryContentDiv.innerHTML = result.summary;
+                                summarySection.style.display = 'block';
+                            } else if (result.error) {
+                                summaryContentDiv.innerHTML = `<p style="color: red;">${result.error}</p>`;
+                                summarySection.style.display = 'block';
+                            } else {
+                                summaryContentDiv.innerHTML = 'Response not available.';
+                                summarySection.style.display = 'block';
+                            }
+
+                            isProcessing = false;
+                        }
+                    };
+
+                    mediaRecorder.start();
+                    isRecording = true;
+                    document.getElementById('recordButton').innerText = 'Stop Recording ⏹️';
+
+                } catch (err) {
+                    console.error('Error accessing microphone:', err);
+                }
+            } else {
+                alert('Your browser does not support audio recording.');
+            }
+        }
+
+        function stopRecording() {
+            if (mediaRecorder) {
+                mediaRecorder.stop();
+                isRecording = false;
+                document.getElementById('recordButton').innerText = 'Start Recording 🎤';
+            }
+        }
+
+        function copySummary() {
+            const summaryContent = document.getElementById('summaryContent').innerText;
+            navigator.clipboard.writeText(summaryContent).then(() => {
+                alert('Response copied to clipboard!');
+            }, () => {
+                alert('Failed to copy response.');
+            });
+        }
+
+        function speakSummary() {
+            const summaryContent = document.getElementById('summaryContent').innerText;
+            utterance = new SpeechSynthesisUtterance(summaryContent);
+            speechSynthesis.speak(utterance);
+        }
+
+        function stopAudio() {
+            if (utterance) {
+                speechSynthesis.cancel();
+                utterance = null;
+            }
+        }
+    </script>
+</body>
+
+</html>
