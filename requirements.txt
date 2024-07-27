@@ -1,1 +1,4 @@
-ÿþ
+Flask
+google-generativeai
+markdown
+gunicorn
